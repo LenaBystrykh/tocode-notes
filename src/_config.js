@@ -1,5 +1,5 @@
 export const app = {
-    title: "template"
+    title: "NoteApp"
 };
 
 export const links = [
