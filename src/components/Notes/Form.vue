@@ -23,10 +23,24 @@ export default {
     },
     methods: {
         sendNote() {
-            this.$emit('sendNote', this.inputValue)
+            let allTags = document.getElementsByClassName('tag-item')
+            let chosenTags = []
+            for (let tag of allTags) {
+                if (tag.classList.contains('active')) {
+                    chosenTags.push(tag.innerText)
+                }
+            }
+            this.$emit('sendNote', {'note': this.inputValue, 'tags': chosenTags})
             this.inputValue = ''
+            for (let tag of allTags) {
+                if (tag.classList.contains('active')) {
+                    tag.classList.remove('active')
+                }
+            }
         },
         getTag(tag) {
+            event.target.classList.toggle("active")
+            console.log(event.target.classList)
             console.log(tag)
         }
     }

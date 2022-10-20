@@ -47,10 +47,10 @@ export default {
                 this.notes = JSON.parse(localNotes)
             }
         },
-        displayNote(noteTitle) {
+        displayNote({'note': noteTitle, 'tags': noteTags}) {
             const note = {
                 note: noteTitle,
-                tags: []
+                tags: noteTags
             }
             this.notes.push(note)
         },

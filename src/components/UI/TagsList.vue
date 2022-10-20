@@ -5,9 +5,9 @@
             v-for="tag in items" 
             :key="tag" 
             @click="$emit('chooseTag', tag)"
-            :class="{ preview: isPreview }">
+            :class="{ preview: isPreview, active: isActive }">
             <!-- ^ сначала название класса, затем - название пропа -->
-            <span>{{ tag }}</span>
+            {{ tag }}
         </div>
     </div>
 </template>
@@ -20,6 +20,10 @@ export default {
             required: true
         },
         isPreview: {
+            type: Boolean,
+            default: false
+        },
+        isActive: {
             type: Boolean,
             default: false
         }
@@ -40,6 +44,10 @@ export default {
     border-radius: 22px;
     user-select: none;
     cursor: pointer;
+    &.active {
+        background-color: #444ce0;
+        color:#fff;
+    }
     &.preview {
         padding: 0;
         color: #444ce0;
