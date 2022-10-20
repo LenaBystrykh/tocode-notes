@@ -4,25 +4,31 @@
         <!-- <div class="note-item" v-for="(index, note) in items" :key="index"> -->
         <!-- Корректным является вариант ниже -->
         <div class="note-item" v-for="(note, index) in items" :key="index">
-            <!-- <div v-if="items[index].type=='text'" class="note-header"> -->
-            <div class="note-header">
-                <p>{{ note.note }}</p>
-                <div class="btns">
-                    <!-- Вот как мы бы это сделали раньше: -->
-                    <!-- <p class="edit-btn" @click="edit(index)">&#x270e;</p> -->
-                    <!-- <p class="remove-btn" @click="remove(index)">&#10005;</p> -->
-                    <!-- А вот так с эмитами: -->
-                    <!-- <p class="edit-btn" @click="$emit('edit', index)">&#x270e;</p> -->
-                    <p class="remove-btn" @click="$emit('remove', index)">&#10005;</p>
+            <div class="note" v-if="note.type=='text'">
+            <!-- <div v-if="note.type=='text'" class="note-header"> -->
+                <div class="note-header">
+                    <p>{{ note.note }}</p>
+                    <div class="btns">
+                        <!-- Вот как мы бы это сделали раньше: -->
+                        <!-- <p class="edit-btn" @click="edit(index)">&#x270e;</p>
+                        <p class="remove-btn" @click="remove(index)">&#10005;</p> -->
+                        <!-- А вот так с эмитами: -->
+                        <p class="edit-btn" @click="$emit('edit', index)">&#x270e;</p>
+                        <p class="remove-btn" @click="$emit('remove', index)">&#10005;</p>
+                    </div>
+                </div>
+                
+                <div class="note-footer">
+                    <TagsList 
+                        isPreview
+                        v-if="note.tags && note.tags.length > 0" 
+                        :items="note.tags" />
                 </div>
             </div>
-            <!-- <input v-else-if="items[index].type == 'edit'" v-model="items[index].note" @keydown="$emit('stopEdit', index)"> -->
-            <div class="note-footer">
-                <TagsList 
-                    isPreview
-                    v-if="note.tags && note.tags.length > 0" 
-                    :items="note.tags" />
-            </div> 
+            <div class="editable-note" v-else>
+                <input v-model="note.note" @keydown="$emit('stopEdit', index)">
+                <TagsList @chooseTag="getTag" :items="tags" />
+            </div>
         </div>
     </div>
 </template>
@@ -35,6 +41,18 @@ export default {
         items: {
             type: Array,
             required: true
+        },
+        tags: {
+            type: Array,
+            required: false
+        }
+    },
+    methods: {
+        getTag(tag) {
+            event.target.classList.toggle("active")
+            
+            console.log(event.target.classList)
+            console.log(tag)
         }
     }
 }

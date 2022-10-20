@@ -18,7 +18,13 @@ export default {
     data() {
         return {
             inputValue: '',
-            tags: ['home', 'work', 'travel', 'study', 'pets', 'sport']
+            // tags: ['home', 'work', 'travel', 'study', 'pets', 'sport']
+        }
+    },
+    props: {
+        tags: {
+            type: Array,
+            required: false
         }
     },
     methods: {
