@@ -69,11 +69,7 @@ export default {
             if(event.key === 'Enter') {
                 let allTags = document.getElementsByClassName('tag-item')
                 let chosenTags = []
-                for (let tag of allTags) {
-                    if (tag.classList.contains('active')) {
-                        chosenTags.push(tag.innerText)
-                    }
-                }
+                Array.from(allTags).forEach((tag) => {if (tag.classList.contains('active')) {chosenTags.push(tag.innerText)}})
                 this.notes[index].tags = chosenTags
                 this.notes[index].type = 'text'
             }

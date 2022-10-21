@@ -31,18 +31,10 @@ export default {
         sendNote() {
             let allTags = document.getElementsByClassName('tag-item')
             let chosenTags = []
-            for (let tag of allTags) {
-                if (tag.classList.contains('active')) {
-                    chosenTags.push(tag.innerText)
-                }
-            }
+            Array.from(allTags).forEach((tag) => {if (tag.classList.contains('active')) {chosenTags.push(tag.innerText)}})
             this.$emit('sendNote', {'note': this.inputValue, 'tags': chosenTags})
             this.inputValue = ''
-            for (let tag of allTags) {
-                if (tag.classList.contains('active')) {
-                    tag.classList.remove('active')
-                }
-            }
+            Array.from(allTags).forEach((tag) => {if (tag.classList.contains('active')) {tag.classList.remove('active')}})
         },
         getTag(tag) {
             event.target.classList.toggle("active")
