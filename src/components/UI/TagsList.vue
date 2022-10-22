@@ -4,10 +4,15 @@
             class="tag-item" 
             v-for="tag in items" 
             :key="tag" 
-            @click="$emit('chooseTag', tag)"
-            :class="{ preview: isPreview, active: isActive }">
+            @click="$emit('changeTag', tag)">
+            <!-- :class="{ preview: isPreview, active: isActive }" -->
             <!-- ^ сначала название класса, затем - название пропа -->
-            {{ tag }}
+            <div v-if="!chosen.includes(tag)" class="usualTag">
+                {{ tag }}
+            </div>
+            <div v-else class="chosenTag">
+                {{ tag }}
+            </div>
         </div>
     </div>
 </template>
@@ -26,6 +31,12 @@ export default {
         isActive: {
             type: Boolean,
             default: false
+        },
+        chosen: {
+            type: Array,
+            default() { 
+                return [] 
+            }
         }
     }
 }
@@ -38,15 +49,25 @@ export default {
     justify-content: center;
 }
 .tag-item {
-    padding: 8px 22px;
-    margin-right: 10px;
-    background-color: #fff;
-    border-radius: 22px;
-    user-select: none;
-    cursor: pointer;
-    &.active {
+    .chosenTag {
+        padding: 8px 22px;
+        margin-right: 10px;
+        background-color: #fff;
+        border-radius: 22px;
+        user-select: none;
+        cursor: pointer;
         background-color: #444ce0;
         color:#fff;
+    }
+    .usualTag {
+        padding: 8px 22px;
+        margin-right: 10px;
+        background-color: #fff;
+        border-radius: 22px;
+        user-select: none;
+        cursor: pointer;
+        background-color: #fff;
+        color: #000;
     }
     &.preview {
         padding: 0;

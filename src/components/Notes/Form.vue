@@ -5,7 +5,8 @@
                 required 
                 v-model="inputValue" 
                 placeholder="Type your note" />
-            <TagsList @chooseTag="getTag" :items="tags" />
+            <TagsList @changeTag="(tag) => $emit('changeTag', tag)" :items="tags" :chosen="chosen" />
+            <!-- (event) => $emit('changeTag', event.target.value) -->
             <button class="btn btnPrimary" type="submit">Add note</button>
         </form>
     </div>
@@ -17,30 +18,27 @@ export default {
     components: {TagsList},
     data() {
         return {
-            inputValue: '',
-            // tags: ['home', 'work', 'travel', 'study', 'pets', 'sport']
+            inputValue: ''
         }
     },
     props: {
         tags: {
             type: Array,
             required: false
+        },
+        chosen: {
+            type: Array,
+            default() {
+                return []
+            }
         }
     },
     methods: {
         sendNote() {
-            let allTags = document.getElementsByClassName('tag-item')
-            let chosenTags = []
-            Array.from(allTags).forEach((tag) => {if (tag.classList.contains('active')) {chosenTags.push(tag.innerText)}})
-            this.$emit('sendNote', {'note': this.inputValue, 'tags': chosenTags})
+            this.$emit('sendNote', this.inputValue)
             this.inputValue = ''
-            Array.from(allTags).forEach((tag) => {if (tag.classList.contains('active')) {tag.classList.remove('active')}})
-        },
-        getTag(tag) {
-            event.target.classList.toggle("active")
-            console.log(event.target.classList)
-            console.log(tag)
         }
+
     }
 }
 </script>
