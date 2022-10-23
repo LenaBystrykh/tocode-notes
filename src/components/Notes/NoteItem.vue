@@ -5,25 +5,16 @@
                 <div class="note-text">{{ text }}</div>
                 <div class="note-tags">
                     <span class="preview" v-for="tag in chosenTags" :key="tag">{{ tag }}</span>
-                </div>
-                
-                
+                </div>  
             </div>
             <div class="btns">
                 <p class="edit-btn" @click="isEdit = true">&#x270e;</p>
                 <p class="delete-btn" @click="$emit('delete')">&#10005;</p>
             </div>
-            
-            <!-- <div class="note-footer">
-                <TagsList 
-                    isPreview
-                    v-if="chosenTags && chosenTags.length > 0" 
-                    :items="chosenTags" />
-            </div> -->
         </div>
         <div class="editable-note" v-else>
             <!-- При изменении значения внутри инпута срабатывает @input и отправляет эмит с новым значением -->
-            <!-- Окончанием редактирование считается нажатие на энтер, как только энтер нажат, отправляется эмит стопэдит -->
+            <!-- Окончанием редактирования считается нажатие на энтер, как только энтер нажат, отправляется эмит стопэдит -->
             <input 
                 :value="text"
                 @input="(event) => $emit('updateValue', event.target.value)" 

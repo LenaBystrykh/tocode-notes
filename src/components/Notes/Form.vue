@@ -6,7 +6,6 @@
                 v-model="inputValue" 
                 placeholder="Type your note" />
             <TagsList @changeTag="(tag) => $emit('changeTag', tag)" :items="tags" :chosen="chosen" />
-            <!-- (event) => $emit('changeTag', event.target.value) -->
             <button class="btn btnPrimary" type="submit">Add note</button>
         </form>
     </div>

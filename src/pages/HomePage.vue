@@ -1,9 +1,6 @@
 <template>
     <Form @sendNote="displayNote" :tags="tags" :chosen="chosenTags" @changeTag="(value) => changeTag(value)"/>
     <div class="notes-list">
-        <!-- Такой вариант ошибочный, так как на первом месте должен обязательно идти сам элемент -->
-        <!-- <div class="note-item" v-for="(index, note) in items" :key="index"> -->
-        <!-- Корректным является вариант ниже -->
         <NoteItem 
             class="note-item"
             v-for="(note, index) in notes" 
@@ -47,15 +44,10 @@ export default {
     mounted() {
         this.getNotes()
     },
-    watch: {
-        notes: {
-            handler(updatedList) {
-                localStorage.setItem('notes', JSON.stringify(updatedList))
-            },
-            deep: true
-        }
-    },
     methods: {
+        updateNotes(notesList) {
+            localStorage.setItem('notes', JSON.stringify(notesList))
+        },
         getNotes() {
             const localNotes = localStorage.getItem('notes')
             if (localNotes) {
@@ -71,12 +63,15 @@ export default {
             }
             this.notes.push(newNote)
             this.chosenTags = []
+            this.updateNotes(this.notes)
         },
         changeNoteText(index, value) {
             this.notes[index].note = value
+            this.updateNotes(this.notes)
         },
         deleteNote(index) {
             this.notes.splice(index, 1)
+            this.updateNotes(this.notes)
         },
         changeNoteTag(index, value) {
             if (this.notes[index].tags.includes(value)) {
@@ -85,6 +80,7 @@ export default {
             else {
                 this.notes[index].tags.push(value)
             }
+            this.updateNotes(this.notes)
         },
         changeTag(value) {
             if (this.chosenTags.includes(value)) {
